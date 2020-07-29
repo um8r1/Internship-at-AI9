@@ -10,13 +10,14 @@ import './App.css';
 //     </span>)
 //   } </span>;
 // }
+let esurl = 'http://localhost:9200';
 
 function Analyze(text, sethighlighttext) {
   let data = {
     "tokenizer": "icu_tokenizer",
     "text": text
   }
-  fetch('http://localhost:9200/_analyze', {
+  fetch(esurl+"/_analyze", {
     method: 'POST', // or 'PUT'
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ function Search(text, setdoc) {
       }
     }
   }
-  fetch('http://localhost:9200/testicu/_search', {
+  fetch(esurl+"/pantip/_search", {
     method: 'POST', // or 'PUT'
     headers: {
       'Content-Type': 'application/json',
