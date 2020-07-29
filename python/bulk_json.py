@@ -5,18 +5,18 @@ from elasticsearch import Elasticsearch, helpers
 es = Elasticsearch(
     ['localhost'],
     port=9200
-
 )
 
 def genBulk(docs):
 
     for doc in docs:
-        yield {"_index": "testicu", "_id": doc['id'], '_source': doc}
-        #yield {"_index": "thailand", 'pipeline': 'pipeline1', '_source': doc}
+        #ตั้งชื่อ index ให้ตรงกับที่ สร้างไว้ใน elasticsearch
+        yield {"_index": "pantip", "_id": doc['id'], '_source': doc}
 
 
 if __name__ == "__main__":
-    filename = 'pantip.sinthorn.json'
+    #ชื่อไฟล์ Json ที่จะนำเข้า
+    filename = 'pantip.json'
     
     #with open(filename) as f:
         #data = json.load(f)
@@ -38,11 +38,14 @@ if __name__ == "__main__":
     
     #with open(filename) as f:
         #data = json.load(obj)
-    size=100000        
+    
+    #มีกี่ object
+    size=100
     bulk_batch = []
     for n,line in enumerate(data):
         
         try:
+            #จัดรูปแบบข้อมูลก่อนนำเข้า elasticsearch
             bulk_batch.append({
                 "id": n,
                 "topic_id": int(line['topic_id']),
@@ -61,6 +64,7 @@ if __name__ == "__main__":
         if (n + 1) % size == 0:
             print('Batch:', n + 1)
             try:
+                #request_timeout ไว้กันเวลาข้อมูลมากๆ จะใช้เวลานานบางทีอาจ timeout ก่อนได้
                 helpers.bulk(es, genBulk(bulk_batch), request_timeout=300)
                 bulk_batch = []
             except Exception as e:
