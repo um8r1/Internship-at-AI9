@@ -37,7 +37,7 @@ function Analyze(text, sethighlighttext) {
 
 function Search(text, setdoc) {
   let data = {
-    //จะให้คืนค่ามาเท่าไหร่
+    //จะให้คืนข้อมูลมาเท่าไหร่
     "size": 10,
     "query": {
       "multi_match": {
