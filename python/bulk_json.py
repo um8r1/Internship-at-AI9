@@ -40,7 +40,7 @@ if __name__ == "__main__":
         #data = json.load(obj)
     
     #มีกี่ object
-    size=100
+    size=500
     bulk_batch = []
     for n,line in enumerate(data):
         

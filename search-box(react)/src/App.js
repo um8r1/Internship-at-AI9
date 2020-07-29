@@ -37,12 +37,14 @@ function Analyze(text, sethighlighttext) {
 
 function Search(text, setdoc) {
   let data = {
+    //จะให้คืนค่ามาเท่าไหร่
     "size": 10,
     "query": {
       "multi_match": {
         "query": text,
         "type": "phrase_prefix",
         "fields": [
+          //ให้ค้นหาใน field ไหนบ้าง
           "title",
           "message",
           "author.name"
